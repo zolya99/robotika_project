@@ -27,16 +27,16 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 
 void point(){
   digitalWrite(speaker_pin, HIGH);
-  delay(1000);
+  delay(333);
   digitalWrite(speaker_pin, LOW);
-  delay(1000);
+  delay(333);
   }
 
 void line(){
 digitalWrite(speaker_pin, HIGH);
-delay(3000);
+delay(1000);
 digitalWrite(speaker_pin, LOW);
-delay(3000);
+delay(1000);
   
   }
 
@@ -57,21 +57,13 @@ void setup() {
   pinMode(green_light_pin, OUTPUT);
   pinMode(blue_light_pin, OUTPUT);
 
-  
-
   pinMode(speaker_pin, OUTPUT);
+  lcd.println("card to read");
+  //Approximate your card to the reader
   
 
 }
 void loop() {
-
-  
-
-  Serial.println("Approximate your card to the reader...");
-
-  
-  
-  
   RGB_color(0,255,255); // Red
   
 
@@ -98,43 +90,47 @@ void loop() {
   }
   Serial.println();
   content.toUpperCase();
-  if (content.substring(1) == "C3 8A 1B 24") //change here the UID of the card/cards that you want to give access
+  if (content.substring(1) == "C3 8A 1B 24" || "47 2B 37 53" ) //change here the UID of the card/cards that you want to give access
   {
-    Serial.println("Authorized access");
+    lcd.clear();
+    lcd.println("Authorized access");
     RGB_color(173,255,47); // Green
     digitalWrite(motorPin1, HIGH);
     /*digitalWrite(speaker_pin, HIGH);
     delay(3000);
     digitalWrite(speaker_pin, LOW);*/
-    digitalWrite(motorPin1, LOW);
+    
     //o
     line();
-    delay(500);
+    delay(100);
     line();
-    delay(500);
+    delay(100);
     line();
-    delay(500 * 4);
+    delay(100 * 4);
     //p
     point();
-    delay(500);
+    delay(100);
     line();
-    delay(500);
+    delay(100);
     line();
-    delay(500);
+    delay(100);
     point();
-    delay(500 * 4);
+    delay(100 * 4);
     //e
     point();
-    delay(500 * 4);
+    delay(100 * 4);
     //n
     line();
-    delay(500);
+    delay(100);
     point();
-    delay(500 * 4);
+    delay(100 * 4);
+    digitalWrite(motorPin1, LOW);
+    
   }
  
  else   {
-    Serial.println(" Access denied");
+    lcd.clear();
+    lcd.println(" Access denied");
     RGB_color(0,255,255); 
     delay(3000);
   }
